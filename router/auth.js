@@ -1,5 +1,5 @@
 const passport = require('passport');
-const router = require('express').Router;
+const router = require('express').Router();
 
 // google strategy
 router.get(
@@ -15,3 +15,5 @@ router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
+
+module.exports = router;
