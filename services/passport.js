@@ -21,11 +21,11 @@ passport.use(
       proxy: true,
     },
     (accessToken, refreshToken, profile, done) => {
-      User.findOne({ googleId: profile.id }).then(existingUser => {
+      User.findOne({ googleID: profile.id }).then(existingUser => {
         if (existingUser) {
           done(null, existingUser);
         } else {
-          new User({ googleId: profile.id })
+          new User({ googleID: profile.id })
             .save()
             .then(user => done(null, user))
             .catch(err => done(err, null));
