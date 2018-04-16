@@ -3,19 +3,28 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "proxy": {
+    "/auth/google": {
+      "target": "http://localhost:5000"
+    }
+  },
   "engines": {
     "node": "9.8.0",
     "npm": "5.6.0"
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "server": "nodemon index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^3.5.1",
     "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.3",
+    "materialize-css": "^1.0.0-beta",
     "mongoose": "^5.0.14",
     "nodemon": "^1.17.3",
     "passport": "^0.4.0",
