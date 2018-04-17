@@ -1,9 +1,11 @@
 const express = require('express');
 const authRoutes = require('./router/auth');
+const paymentsRoutes = require('./router/payments');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 
 mongoose.connect(keys.mongoURI);
 
@@ -13,6 +15,12 @@ const app = express();
 require('./models/Users');
 // Import passport
 require('./services/passport');
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 app.use(
   cookieSession({
@@ -25,6 +33,7 @@ app.use(passport.session());
 
 // Bind routes
 app.use('/auth', authRoutes);
+app.use('/api/payments', paymentsRoutes);
 
 const PORT = process.env.PORT || 5000;
 

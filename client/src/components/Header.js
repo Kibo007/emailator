@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { mapsStateToProps } from '../data/module/auth';
+import { mapsStateToProps, mapActionToDispatch } from '../data/module/auth';
+import StripePayments from './StripePayment';
 
 class Header extends Component {
   renderContent = () => {
@@ -15,9 +16,15 @@ class Header extends Component {
         );
       default:
         return (
-          <li>
-            <a href="/auth/logout">logout</a>
-          </li>
+          <Fragment>
+            <li style={{ margin: '0 10px' }}>
+              <StripePayments handleToken={this.props.handleToken} />
+            </li>
+            <li>Credits: {this.props.auth.credits}</li>
+            <li>
+              <a href="/auth/logout">logout</a>
+            </li>
+          </Fragment>
         );
     }
   };
@@ -36,4 +43,4 @@ class Header extends Component {
   }
 }
 
-export default connect(mapsStateToProps)(Header);
+export default connect(mapsStateToProps, mapActionToDispatch)(Header);

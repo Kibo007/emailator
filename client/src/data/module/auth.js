@@ -8,8 +8,13 @@ const userFetched = payload => ({
 });
 
 const fetchUser = () => async dispatch => {
-  const user = await axios('/auth/signed_user');
+  const user = await axios.get('/auth/signed_user');
   dispatch(userFetched(user.data));
+};
+
+const handleToken = token => async dispatch => {
+  const res = await axios.post('/api/payments/add-credits', token);
+  dispatch(userFetched(res.data));
 };
 
 const initalState = null;
@@ -25,6 +30,7 @@ export const auth = (state = initalState, action) => {
 
 export const mapActionToDispatch = {
   fetchUser,
+  handleToken,
 };
 
 export const mapsStateToProps = ({ auth }) => {
