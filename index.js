@@ -1,6 +1,7 @@
 const express = require('express');
 const authRoutes = require('./router/auth');
 const paymentsRoutes = require('./router/payments');
+const survaysRoutes = require('./router/survey');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
@@ -11,8 +12,9 @@ mongoose.connect(keys.mongoURI);
 
 const app = express();
 
-// import model users
+// import models
 require('./models/Users');
+require('./models/Survays');
 // Import passport
 require('./services/passport');
 
@@ -34,6 +36,7 @@ app.use(passport.session());
 // Bind routes
 app.use('/auth', authRoutes);
 app.use('/api/payments', paymentsRoutes);
+app.use('/api/survays', survaysRoutes);
 
 const PORT = process.env.PORT || 5000;
 
