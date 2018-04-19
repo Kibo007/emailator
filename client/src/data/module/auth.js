@@ -1,11 +1,5 @@
 import axios from 'axios';
-
-const FETCH_USER = 'FETCH_USER';
-
-const userFetched = payload => ({
-  type: FETCH_USER,
-  payload,
-});
+import { FETCH_USER, userFetched } from './shared';
 
 const fetchUser = () => async dispatch => {
   const user = await axios.get('/auth/signed_user');

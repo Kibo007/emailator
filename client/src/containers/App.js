@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { mapActionToDispatch } from '../data/module/auth';
 
-import Header from './Header';
+import Header from '../components/Header';
+import Surveys from './Surveys';
+import NewSurvey from './NewSurvey';
 const Lending = () => <div>Lending</div>;
-const Dashboard = () => <div>Dashboard</div>;
-const NewSurvay = () => <div>NewSurvay</div>;
 
 class App extends Component {
   componentDidMount() {
@@ -18,11 +18,11 @@ class App extends Component {
       <div>
         <Header />
         <Route exact path="/" component={Lending} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/new-survey" component={NewSurvay} />
+        <Route exact path="/surveys" component={Surveys} />
+        <Route exact path="/surveys/new" component={NewSurvey} />
       </div>
     );
   }
 }
 
-export default connect(null, mapActionToDispatch)(App);
+export default withRouter(connect(null, mapActionToDispatch)(App));
