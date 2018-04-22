@@ -6,7 +6,7 @@ import { mapActionToDispatch } from '../data/module/auth';
 import Header from '../components/Header';
 import Surveys from './Surveys';
 import NewSurvey from './NewSurvey';
-const Lending = () => <div>Lending</div>;
+import Lending from '../components/Lending';
 
 class App extends Component {
   componentDidMount() {
