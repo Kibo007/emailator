@@ -8,7 +8,7 @@ import {
 } from '../../data/module/survayForm';
 import { withRouter } from 'react-router-dom';
 
-const SurveyReview = ({ surveyValues, history, onGoBack }) => {
+const SurveyReview = ({ surveyValues, history, onGoBack, sendSurvey }) => {
   const renderFileds = _map(surveyFields, field => (
     <div key={field.name}>
       <label>{field.label}</label>

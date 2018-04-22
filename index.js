@@ -1,7 +1,7 @@
 const express = require('express');
 const authRoutes = require('./router/auth');
 const paymentsRoutes = require('./router/payments');
-const survaysRoutes = require('./router/survey');
+const surveysRoutes = require('./router/survey');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
@@ -10,11 +10,18 @@ const bodyParser = require('body-parser');
 
 mongoose.connect(keys.mongoURI);
 
+// test if this works for debugging of mongoose
+mongoose.set('debug', function(coll, method, query, doc) {
+  console.log(
+    `${coll} ${method} ${JSON.stringify(query)} ${JSON.stringify(doc)}`
+  );
+});
+
 const app = express();
 
 // import models
 require('./models/Users');
-require('./models/Survays');
+require('./models/Surveys');
 // Import passport
 require('./services/passport');
 
@@ -36,7 +43,7 @@ app.use(passport.session());
 // Bind routes
 app.use('/auth', authRoutes);
 app.use('/api/payments', paymentsRoutes);
-app.use('/api/survays', survaysRoutes);
+app.use('/api/surveys', surveysRoutes);
 
 const PORT = process.env.PORT || 5000;
 

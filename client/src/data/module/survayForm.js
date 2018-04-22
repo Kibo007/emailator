@@ -2,7 +2,7 @@ import axios from 'axios';
 import { userFetched } from './shared';
 
 const sendSurvey = (survay, history) => async dispatch => {
-  const response = await axios.post('/api/survays', survay);
+  const response = await axios.post('/api/surveys', survay);
   dispatch(userFetched(response.data));
   history.push('/surveys');
 };

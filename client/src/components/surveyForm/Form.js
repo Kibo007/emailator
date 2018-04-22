@@ -30,7 +30,7 @@ class SurveyForm extends Component {
 
 const validate = values => {
   const error = {};
-  error.receipients = validateStringOfEmails(values.receipients || '');
+  error.recipients = validateStringOfEmails(values.recipients || '');
 
   _forEach(surveyFields, field => {
     if (!values[field.name]) {
