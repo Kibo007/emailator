@@ -17,6 +17,14 @@ router.get('/:surveyId/:choice', (req, res) => {
   res.send('thank you for wating');
 });
 
+router.get('/', requireLogin, async (req, res) => {
+  const surveys = await Survey.find({ userId: req.user.id }).select({
+    recipients: 0,
+  });
+  console.log(surveys);
+  res.send(surveys);
+});
+
 router.post('/', requireLogin, requireCredits, async (req, res) => {
   const { title, subject, recipients, body } = req.body;
   const survey = new Survey({
@@ -26,6 +34,7 @@ router.post('/', requireLogin, requireCredits, async (req, res) => {
     recipients: recipients.split(',').map(email => ({
       email: email.trim(),
     })),
+    userId: req.user.id,
     sendDate: new Date(),
   });
 

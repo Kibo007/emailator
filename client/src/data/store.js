@@ -1,10 +1,12 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { auth } from './module/auth';
+import { surveys } from './module/surveys';
 import { reducer as reduxFormReducer } from 'redux-form';
 
 const reducer = combineReducers({
-  auth: auth,
+  auth,
+  surveys,
   form: reduxFormReducer,
 });
 
