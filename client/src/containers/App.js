@@ -1,28 +1,45 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { mapActionToDispatch } from '../data/module/auth';
+import { mapsStateToProps, mapActionToDispatch } from '../data/module/auth';
 
 import Header from '../components/Header';
 import Surveys from './Surveys';
 import NewSurvey from './NewSurvey';
 import Lending from '../components/Lending';
+import PrivateRoute from '../components/PrivateRoute';
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
   }
 
+  componentDidUpdate() {
+    const { user, history } = this.props;
+    if (user && history.location.pathname === '/') {
+      history.push('/surveys');
+    }
+  }
+
   render() {
+    const { loading, handleToken, user } = this.props;
+    if (loading || user === null) {
+      return 'loading...';
+    }
     return (
       <div>
-        <Header />
+        <Header user={user} handleToken={handleToken} />
         <Route exact path="/" component={Lending} />
-        <Route exact path="/surveys" component={Surveys} />
-        <Route exact path="/surveys/new" component={NewSurvey} />
+        <PrivateRoute exact path="/surveys" component={Surveys} auth={user} />
+        <PrivateRoute
+          exact
+          path="/surveys/new"
+          component={NewSurvey}
+          auth={user}
+        />
       </div>
     );
   }
 }
 
-export default withRouter(connect(null, mapActionToDispatch)(App));
+export default withRouter(connect(mapsStateToProps, mapActionToDispatch)(App));

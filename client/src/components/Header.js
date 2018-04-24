@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { mapsStateToProps, mapActionToDispatch } from '../data/module/auth';
+import React, { Fragment } from 'react';
 import StripePayments from './StripePayment';
 
-class Header extends Component {
-  renderContent = () => {
-    switch (this.props.auth) {
+const Header = ({ user, handleToken }) => {
+  
+  const renderContent = () => {
+    switch (user) {
       case null:
         return;
       case false:
@@ -18,9 +17,9 @@ class Header extends Component {
         return (
           <Fragment>
             <li style={{ margin: '0 10px' }}>
-              <StripePayments handleToken={this.props.handleToken} />
+              <StripePayments handleToken={handleToken} />
             </li>
-            <li>Credits: {this.props.auth.credits}</li>
+            <li>Credits: {user.credits}</li>
             <li>
               <a href="/auth/logout">logout</a>
             </li>
@@ -29,18 +28,16 @@ class Header extends Component {
     }
   };
 
-  render() {
-    return (
-      <nav>
-        <div className="nav-wrapper">
-          <a href="dasdsad" className="brand-logo left">
-            Emailator
-          </a>
-          <ul className="right">{this.renderContent()}</ul>
-        </div>
-      </nav>
-    );
-  }
-}
+  return (
+    <nav>
+      <div className="nav-wrapper">
+        <a href="dasdsad" className="brand-logo left">
+          Emailator
+        </a>
+        <ul className="right">{renderContent()}</ul>
+      </div>
+    </nav>
+  );
+};
 
-export default connect(mapsStateToProps, mapActionToDispatch)(Header);
+export default Header;

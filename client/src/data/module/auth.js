@@ -1,9 +1,18 @@
 import axios from 'axios';
 import { FETCH_USER, userFetched } from './shared';
 
+const LOADING = 'LOADING';
+
+const loading = status => ({
+  type: LOADING,
+  payload: status,
+});
+
 const fetchUser = () => async dispatch => {
+  dispatch(loading(true));
   const user = await axios.get('/auth/signed_user');
   dispatch(userFetched(user.data));
+  dispatch(loading(false));
 };
 
 const handleToken = token => async dispatch => {
@@ -11,12 +20,23 @@ const handleToken = token => async dispatch => {
   dispatch(userFetched(res.data));
 };
 
-const initalState = null;
+const initalState = {
+  user: null,
+  loading: false,
+};
 
 export const auth = (state = initalState, action) => {
   switch (action.type) {
     case FETCH_USER:
-      return action.payload || false;
+      return {
+        ...state,
+        user: action.payload || false,
+      };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
     default:
       return state;
   }
@@ -29,6 +49,7 @@ export const mapActionToDispatch = {
 
 export const mapsStateToProps = ({ auth }) => {
   return {
-    auth,
+    user: auth.user,
+    loading: auth.loading,
   };
 };
